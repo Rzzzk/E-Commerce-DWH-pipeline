@@ -1,0 +1,17 @@
+# Environments
+.env
+ecommerce_dwh/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Spark & Jupyter
+.ipynb_checkpoints/
+spark-warehouse/
+derby.log
+metastore_db/
+
+# OS generated files
+.DS_Store
+Thumbs.db

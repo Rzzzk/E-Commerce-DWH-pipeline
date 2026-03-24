@@ -1,0 +1,6 @@
+pyspark>=3.4.0
+oracledb>=2.0.0
+pandas>=2.0.0
+dash>=2.14.0
+jupyterlab>=4.0.0
+python-dotenv>=1.0.0
