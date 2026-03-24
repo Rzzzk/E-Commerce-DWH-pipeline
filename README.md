@@ -12,20 +12,23 @@ An end-to-end data engineering and business intelligence project. This pipeline 
 
 ## 📂 Repository Structure
 
-├── data/                        # Generated CSV Data Marts (Output)
-├── dashboard/                   # BI Layer
-│   ├── app.py                   # Dashboard entry point
-│   ├── layout.py                # UI components and static charts
-│   └── callbacks.py             # Interactive dashboard logic
-├── notebooks/                   # Jupyter notebooks for ETL exploration
-├── sql_scripts/                 # Oracle DDL and analytical queries
+```text
+ecommerce_dwh_project/
+├── data/                    # Generated CSV Data Marts (ETL Output)
+├── dashboard/               # BI Presentation Layer
+│   ├── app.py               # Dashboard entry point
+│   ├── layout.py            # UI components and static charts
+│   └── callbacks.py         # Interactive dashboard logic
+├── notebooks/               # Jupyter notebooks for ETL exploration
+├── sql_scripts/             # Oracle DDL and analytical queries
 │   ├── 01_ddl_star_schema.sql
-│   ├── 02_insert_dummy_data.sql
-│   └── 03_analytical_kpis.sql
-└── src/                         # Production ETL Pipeline
-    ├── config/                  # Database credentials and configs
-    ├── etl/                     # Spark extraction logic
-    └── data_marts/              # KPI mathematical transformations
+│   ├── 02_insert_techhub_data.sql
+│   ├── 03_analytical_kpis.sql
+│   └── 04_recommendation_engine.sql
+└── src/                     # Production PySpark ETL Pipeline
+    ├── config/              # Database credentials and configs
+    ├── etl/                 # Spark extraction logic
+    └── data_marts/          # KPI mathematical transformations
 
 ## 🚀 How to Run
 
@@ -34,8 +37,5 @@ An end-to-end data engineering and business intelligence project. This pipeline 
 conda create -n ecommerce_dwh python=3.10 -y
 conda activate ecommerce_dwh
 pip install -r requirements.txt
-
-**2. Run**
-```bash
 python -m src.data_marts.kpi_calculator
 python dashboard/app.py
