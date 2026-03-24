@@ -30,6 +30,11 @@ ecommerce_dwh_project/
     ├── etl/                 # Spark extraction logic
     └── data_marts/          # KPI mathematical transformations
 ```
+
+## 📊 Dashboard Preview
+![Dashboard Screenshot](dashboard/assets/Screenshot.png)
+
+
 ## 🚀 How to Run
 
 **1. Setup the Environment**
