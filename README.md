@@ -29,7 +29,7 @@ ecommerce_dwh_project/
     ├── config/              # Database credentials and configs
     ├── etl/                 # Spark extraction logic
     └── data_marts/          # KPI mathematical transformations
-
+```
 ## 🚀 How to Run
 
 **1. Setup the Environment**
@@ -37,5 +37,10 @@ ecommerce_dwh_project/
 conda create -n ecommerce_dwh python=3.10 -y
 conda activate ecommerce_dwh
 pip install -r requirements.txt
+```
+
+**2. Run**
+```bash
 python -m src.data_marts.kpi_calculator
 python dashboard/app.py
+```
