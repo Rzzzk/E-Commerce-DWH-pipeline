@@ -10,16 +10,41 @@ def create_spark_session():
         .getOrCreate()
 
 def extract_and_enrich_data(spark):
-    """Extracts tables from Oracle and joins them into an enriched DataFrame."""
+    """
+    Dynamically extracts all Star Schema tables from Oracle, 
+    stores them in a dictionary, and creates a fully enriched master DataFrame.
+    """
     props = get_connection_properties()
     
+    # 1. Define all tables in the Star Schema
+    tables = [
+        "FACT_ORDER_LINE", 
+        "DIM_DATE", 
+        "DIM_CUSTOMER", 
+        "DIM_PRODUCT", 
+        "DIM_CATEGORY", 
+        "DIM_PAYMENT", 
+        "DIM_SHIPPING"
+    ]
+    
+    # 2. Extract data into a dictionary of DataFrames
+    dataframes = {}
     print("Extracting Data from Oracle...")
-    fact_df = spark.read.jdbc(url=JDBC_URL, table="FACT_ORDER_LINE", properties=props)
-    dim_date_df = spark.read.jdbc(url=JDBC_URL, table="DIM_DATE", properties=props)
-    dim_category_df = spark.read.jdbc(url=JDBC_URL, table="DIM_CATEGORY", properties=props)
+    for table in tables:
+        print(f" -> Reading table: {table}")
+        dataframes[table] = spark.read.jdbc(url=JDBC_URL, table=table, properties=props)
 
-    print("Enriching Dataset with Dimensions...")
-    enriched_df = fact_df.join(dim_date_df, "DATE_KEY", "left") \
-                         .join(dim_category_df, "CATEGORY_KEY", "left")
+    # 3. Create a fully denormalized "Enriched" DataFrame
+    # We use the dictionary keys to grab the DataFrames and join them to the Fact table
+    print("Enriching Dataset with all Dimensions...")
+    enriched_df = dataframes["FACT_ORDER_LINE"] \
+        .join(dataframes["DIM_DATE"], "DATE_KEY", "left") \
+        .join(dataframes["DIM_CUSTOMER"], "CUSTOMER_KEY", "left") \
+        .join(dataframes["DIM_PRODUCT"], "PRODUCT_KEY", "left") \
+        .join(dataframes["DIM_CATEGORY"], "CATEGORY_KEY", "left") \
+        .join(dataframes["DIM_PAYMENT"], "PAYMENT_KEY", "left") \
+        .join(dataframes["DIM_SHIPPING"], "SHIPPING_KEY", "left")
                          
-    return fact_df, enriched_df
+    # Return both the dictionary of raw tables (for specific aggregations) 
+    # and the fully enriched table (for broad analytics)
+    return dataframes, enriched_df

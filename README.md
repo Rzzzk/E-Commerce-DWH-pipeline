@@ -32,7 +32,7 @@ ecommerce_dwh_project/
 ```
 
 ## 📊 Dashboard Preview
-![Dashboard Screenshot](dashboard/assets/Screenshot.png)
+![Dashboard Screenshot](dashboard/assets/Screenshot2.png)
 
 
 ## 🚀 How to Run
